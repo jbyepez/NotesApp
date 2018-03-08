@@ -43,23 +43,8 @@ public class Seeder implements CommandLineRunner {
                 Mariana
         );
 
-        // save a couple of customers
+        // save a couple of notes
         noteRepository.save(n1);
         noteRepository.save(n2);
-
-        // fetch all customers
-        System.out.println("Notes found with findAll():");
-        System.out.println("-------------------------------");
-        for (Note note : noteRepository.findAll()) {
-            System.out.println(note);
-        }
-        System.out.println();
-
-        System.out.println("Notes found with findByUser({User}):");
-        System.out.println("--------------------------------");
-        for (Note note : noteRepository.findByUser(Mariana)) {
-            System.out.println(note);
-        }
-
     }
 }
