@@ -4,24 +4,33 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
 @Component
 public class Seeder implements CommandLineRunner {
 
-    @Autowired
-    private NoteRepository repository;
+    private NoteRepository noteRepository;
+    private UserRepository userRepository;
+
+    public Seeder(NoteRepository noteRepository, UserRepository userRepository){
+        this.noteRepository = noteRepository;
+        this.userRepository = userRepository;
+    }
 
     @Override
     public void run(String... args) throws Exception {
 
-        repository.deleteAll();
+        noteRepository.deleteAll();
+        userRepository.deleteAll();
 
         User Camilo = new User("camil0","Camilo");
         User John = new User("jojo","John");
         User Eliana = new User("eli","Eliana");
         User Mariana = new User("mari","Mariana");
+
+        userRepository.saveAll(Arrays.asList(Camilo, John, Eliana, Mariana));
 
         Note n1 = new Note(
                 "Comer",
@@ -35,20 +44,20 @@ public class Seeder implements CommandLineRunner {
         );
 
         // save a couple of customers
-        repository.save(n1);
-        repository.save(n2);
+        noteRepository.save(n1);
+        noteRepository.save(n2);
 
         // fetch all customers
         System.out.println("Notes found with findAll():");
         System.out.println("-------------------------------");
-        for (Note note : repository.findAll()) {
+        for (Note note : noteRepository.findAll()) {
             System.out.println(note);
         }
         System.out.println();
 
         System.out.println("Notes found with findByUser({User}):");
         System.out.println("--------------------------------");
-        for (Note note : repository.findByUser(Mariana)) {
+        for (Note note : noteRepository.findByUser(Mariana)) {
             System.out.println(note);
         }
 

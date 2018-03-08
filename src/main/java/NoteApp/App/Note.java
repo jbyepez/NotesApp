@@ -1,15 +1,21 @@
 package NoteApp.App;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.Indexed;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.Date;
 
+@Document
 public class Note {
     @Id
     private String id;
     private String text;
     private Date date;
+    @Indexed
     private User user;
+
+    public Note(){}
 
     public Note(String text, Date date, User user){
         this.text = text;
